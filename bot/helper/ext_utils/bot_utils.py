@@ -89,7 +89,7 @@ def get_readable_message():
     with download_dict_lock:
         msg = ""
         for download in list(download_dict.values()):
-            msg += f"<b>Filename:</b> <i>{download.name()}</i>"
+            msg += f"<b>📂 Name:</b> <i>{download.name()}</i>"
             msg += f"\n<b>Status:</b> <code>{download.status()}</code>"
             if download.status() != MirrorStatus.STATUS_ARCHIVING:
                 msg += f"\n<code>{get_progress_bar_string(download)}</code>\n<b>Progress:</b> <i>{download.progress()} of {download.size()}</i>" \
@@ -98,7 +98,6 @@ def get_readable_message():
                 if hasattr(download, 'is_torrent'):
                     msg += f"\n<b>Peers:</b> {download.download().connections} " \
                            f"| <b>Seeds:</b> {download.download().num_seeders}"
-                msg += f"\nGID: <code>{download.gid()}</code>"
             msg += "\n\n"
         return msg
 
