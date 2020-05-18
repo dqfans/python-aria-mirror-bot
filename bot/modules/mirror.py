@@ -115,7 +115,7 @@ class MirrorListener(listeners.MirrorListeners):
                 if os.path.isdir(f'{DOWNLOAD_DIR}/{self.uid}/{download_dict[self.uid].name()}'):
                     share_url += '/'
                 msg += f'\n\n<b>🕹 Shareable link:</b> {share_url}'
-                msg += f'\n\n © @Torrentstores 😍'
+                msg += f'\n\n © @TorrentStores 😍'
             if self.tag is not None:
                 msg += f'\ncc: @{self.tag}' 
             try:
