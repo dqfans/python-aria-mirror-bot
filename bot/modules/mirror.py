@@ -179,7 +179,7 @@ def _mirror(bot, update, isTar=False):
     else:
         tag = None
     if not bot_utils.is_url(link) and not bot_utils.is_magnet(link):
-        sendMessage('No download source provided', bot, update)
+        sendMessage('𝐍𝐨 𝐝𝐨𝐰𝐧𝐥𝐨𝐚𝐝 𝐬𝐨𝐮𝐫𝐜𝐞 𝐩𝐫𝐨𝐯𝐢𝐝𝐞𝐝. 𝐅𝐨𝐫𝐦𝐚𝐭 /𝚖𝚒𝚛𝚛𝚘𝚛𝚃𝚘𝚛𝚛𝚎𝚗𝚝𝚜𝚝𝚘𝚛𝚎𝚋𝚘𝚝 𝐦𝐚𝐠𝐧𝐞𝐭𝐥𝐢𝐧𝐤', bot, update)
         return
 
     try:
