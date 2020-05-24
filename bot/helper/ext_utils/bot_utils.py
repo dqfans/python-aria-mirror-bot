@@ -22,7 +22,7 @@ class MirrorStatus:
 
 
 PROGRESS_MAX_SIZE = 100 // 8
-PROGRESS_INCOMPLETE = ['▓', '▓', '▓', '▓', '▓', '▓', '▓']
+PROGRESS_INCOMPLETE = ['▏', '▎', '▍', '▌', '▋', '▊', '▉']
 
 SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
 
@@ -77,7 +77,7 @@ def get_progress_bar_string(status):
     p = min(max(p, 0), 100)
     cFull = p // 8
     cPart = p % 8 - 1
-    p_str = '▓' * cFull
+    p_str = '█' * cFull
     if cPart >= 0:
         p_str += PROGRESS_INCOMPLETE[cPart]
     p_str += ' ' * (PROGRESS_MAX_SIZE - cFull)
@@ -98,9 +98,10 @@ def get_readable_message():
             if download.status() == MirrorStatus.STATUS_DOWNLOADING:
                 if hasattr(download, 'is_torrent'):
                     msg += f"| P: {download.aria_download().connections} " \
-                           f"| S: {download.aria_download().num_seeders}"   
-             msg += "\n\n"
-         return msg
+                           f"| S: {download.aria_download().num_seeders}"
+                msg += f"\nGID: <code>{download.gid()}</code>"
+            msg += "\n\n"
+        return msg
 
 
 def get_readable_time(seconds: int) -> str:
