@@ -93,13 +93,12 @@ def get_readable_message():
             msg += download.status()
             if download.status() != MirrorStatus.STATUS_ARCHIVING:
                 msg += f"\n<code>{get_progress_bar_string(download)} {download.progress()}</code> " \
-                       f"{download.size()}" \
-                       f" at {download.speed()}, ETA: {download.eta()} "
+                       f"Size: {download.size()}" \
+                       f"Speed: {download.speed()}, ETA: {download.eta()} "
             if download.status() == MirrorStatus.STATUS_DOWNLOADING:
                 if hasattr(download, 'is_torrent'):
                     msg += f"| P: {download.aria_download().connections} " \
                            f"| S: {download.aria_download().num_seeders}"
-                msg += f"\nGID: <code>{download.gid()}</code>"
             msg += "\n\n"
         return msg
 
