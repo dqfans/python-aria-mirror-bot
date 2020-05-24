@@ -93,7 +93,7 @@ def get_readable_message():
             msg += download.status()
             if download.status() != MirrorStatus.STATUS_ARCHIVING:
                 msg += f"\n<code>{get_progress_bar_string(download)} {download.progress()}</code> " 
-                       f"File Size: {download.size()}" 
+                msg += f"File Size: {download.size()}" 
                        f"Speed: {download.speed()}, ETA: {download.eta()} "
             if download.status() == MirrorStatus.STATUS_DOWNLOADING:
                 if hasattr(download, 'is_torrent'):
