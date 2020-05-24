@@ -13,16 +13,16 @@ URL_REGEX = r"(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+"
 
 
 class MirrorStatus:
-    STATUS_UPLOADING = "𝚄𝚙𝚕𝚘𝚊𝚍𝚒𝚗𝚐 📤"
-    STATUS_DOWNLOADING = "𝙳𝚘𝚠𝚗𝚕𝚘𝚊𝚍𝚒𝚗𝚐 📥"
-    STATUS_WAITING = "Queued. 𝘞𝘪𝘭𝘭 𝘣𝘦 𝘴𝘵𝘢𝘳𝘵 𝘴𝘰𝘰𝘯..."
+    STATUS_UPLOADING = "Uploading"
+    STATUS_DOWNLOADING = "Downloading"
+    STATUS_WAITING = "Queued"
     STATUS_FAILED = "Failed. Cleaning download"
     STATUS_CANCELLED = "Cancelled"
-    STATUS_ARCHIVING = "𝙰𝚛𝚌𝚑𝚒𝚟𝚒𝚗𝚐 🗂"
+    STATUS_ARCHIVING = "Archiving"
 
 
 PROGRESS_MAX_SIZE = 100 // 8
-PROGRESS_INCOMPLETE = ['▓', '▓', '▓', '▓', '▓', '▓', '▓']
+PROGRESS_INCOMPLETE = ['▏', '▎', '▍', '▌', '▋', '▊', '▉']
 
 SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
 
@@ -77,10 +77,10 @@ def get_progress_bar_string(status):
     p = min(max(p, 0), 100)
     cFull = p // 8
     cPart = p % 8 - 1
-    p_str = '▓' * cFull
+    p_str = '█' * cFull
     if cPart >= 0:
         p_str += PROGRESS_INCOMPLETE[cPart]
-    p_str += '░' * (PROGRESS_MAX_SIZE - cFull)
+    p_str += ' ' * (PROGRESS_MAX_SIZE - cFull)
     p_str = f"[{p_str}]"
     return p_str
 
@@ -89,18 +89,18 @@ def get_readable_message():
     with download_dict_lock:
         msg = ""
         for download in list(download_dict.values()):
-            msg += f"<b>📂 Name:</b> <i>{download.name()}</i>"
+            msg += f"<i>{download.name()}</i> - "
             msg += download.status()
             if download.status() != MirrorStatus.STATUS_ARCHIVING:
-                msg += f"\n<code>{get_progress_bar_string(download)} {download.progress()}</code> of " 
-                msg += f"File Size: {download.size()}" 
-                msg += f"Seep: {download.speed()}, ETA: {download.eta()} "
+                msg += f"\n<code>{get_progress_bar_string(download)} {download.progress()}</code> of " \
+                       f"{download.size()}" \
+                       f" at {download.speed()}, ETA: {download.eta()} "
             if download.status() == MirrorStatus.STATUS_DOWNLOADING:
                 if hasattr(download, 'is_torrent'):
                     msg += f"| P: {download.aria_download().connections} " \
-                           f"| S: {download.aria_download().num_seeders}"
-            msg += "\n\n"
-        return msg
+                           f"| S: {download.aria_download().num_seeders}"   
+             msg += "\n\n"
+         return msg
 
 
 def get_readable_time(seconds: int) -> str:
