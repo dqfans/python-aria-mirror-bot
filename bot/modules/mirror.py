@@ -117,7 +117,7 @@ class MirrorListener(listeners.MirrorListeners):
                 msg += f'\n\n<b>🕹 Shareable link:</b> {share_url}'
                 msg += f'\n\n © @TorrentStore 😍'
             if self.tag is not None:
-                msg += f'\ncc: @{self.tag}' 
+                msg += f'\n' 
             try:
                 fs_utils.clean_download(download_dict[self.uid].path())
             except FileNotFoundError:
